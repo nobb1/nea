@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  word: MyString
+  type: 
+  conjugation: MyText
+  example: MyText
+  translation: MyString
+  votes: 1
+
+two:
+  word: MyString
+  type: 
+  conjugation: MyText
+  example: MyText
+  translation: MyString
+  votes: 1
