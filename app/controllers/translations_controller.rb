@@ -58,13 +58,14 @@ class TranslationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_translation
-      @translation = Translation.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def translation_params
-      params.require(:translation).permit(:word, :type, :conjugation, :example, :translation, :votes)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_translation
+    @translation = Translation.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def translation_params
+    params.require(:translation).permit(:word, :type, :conjugation, :example, :translation, :votes)
+  end
 end

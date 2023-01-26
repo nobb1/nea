@@ -9,7 +9,7 @@ class CreateTranslations < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-    add_foreign_key :translations, :language, :language_id
-    add_foreign_key :translations, :conjugation, :conjugation_id
+    add_foreign_key :translations, :languages, :language_id
+    add_foreign_key :translations, :conjugations, :conjugation_id
   end
 end
