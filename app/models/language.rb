@@ -1,5 +1,4 @@
 class Language < ApplicationRecord
-  validates :language, presence: true
-
-  belongs_to :translations
+  
+  has_many :translations
 end

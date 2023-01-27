@@ -1,5 +1,5 @@
 class TranslationsController < ApplicationController
-  before_action :set_translation, only: %i[ show edit update destroy ]
+  before_action :set_translation, only: %i[show edit update destroy]
 
   # GET /translations or /translations.json
   def index
@@ -13,6 +13,9 @@ class TranslationsController < ApplicationController
   # GET /translations/new
   def new
     @translation = Translation.new
+    @translation.build_conjugation
+    @translation.build_language
+    @translation.votes = 0
   end
 
   # GET /translations/1/edit
@@ -64,8 +67,12 @@ class TranslationsController < ApplicationController
     @translation = Translation.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def translation_params
-    params.require(:translation).permit(:word, :type, :conjugation, :example, :translation, :votes)
+    params.require(:translation).permit(:word,
+                                        :word_type,
+                                        :example,
+                                        :word_translation,
+                                        language_attributes: %i[language_name],
+                                        conjugation_attributes: %i[present_i present_you present_hesheit present_we present_youall present_they])
   end
 end

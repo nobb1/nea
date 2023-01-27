@@ -11,37 +11,64 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :word, style: "display: block" %>
+  <div class="field">
+    <%= form.label :word, class: "word" %>
     <%= form.text_field :word %>
   </div>
 
-  <div>
-    <%= form.label :type, style: "display: block" %>
-    <%= form.text_field :type %>
+  <%= form.fields_for :language do |language_form| %>
+    <div class="field">
+      <%= language_form.label :language_name, "Language:" %>
+      <%= language_form.select :language_name, %w[spanish french] %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :word_translation, "Translation" %>
+    <%= form.text_field :word_translation %>
   </div>
 
-  <div>
-    <%= form.label :conjugation, style: "display: block" %>
-    <%= form.text_area :conjugation %>
+  <div class="field">
+    <%= form.label :word_type %>
+    <%= form.select :word_type, %w[adjective adverb article conjunction noun preposition pronoun verb] %>
   </div>
 
-  <div>
-    <%= form.label :example, style: "display: block" %>
+  <div class="conjugation" style="display: none">
+    <%= form.fields_for :conjugation do |conjugation_form|%>
+      <h6><b>Present Tense</b></h6>
+      <div class="field">
+        <%= conjugation_form.label :present_i, "I:" %>
+        <%= conjugation_form.text_field :present_i %>
+      </div>
+      <div class="field">
+        <%= conjugation_form.label :present_you, "You:" %>
+        <%= conjugation_form.text_field :present_you %>
+      </div>
+      <div class="field">
+        <%= conjugation_form.label :present_hesheit, "He/she/it:" %>
+        <%= conjugation_form.text_field :present_hesheit %>
+      </div>
+      <div class="field">
+        <%= conjugation_form.label :present_we, "We:" %>
+        <%= conjugation_form.text_field :present_we %>
+      </div>
+      <div class="field">
+        <%= conjugation_form.label :present_youall, "You all:" %>
+        <%= conjugation_form.text_field :present_youall %>
+      </div>
+      <div class="field">
+        <%= conjugation_form.label :present_they, "They:" %>
+        <%= conjugation_form.text_field :present_they %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :example%>
     <%= form.text_area :example %>
   </div>
 
-  <div>
-    <%= form.label :translation, style: "display: block" %>
-    <%= form.text_field :translation %>
-  </div>
-
-  <div>
-    <%= form.label :votes, style: "display: block" %>
-    <%= form.number_field :votes %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="field">
+    <%= form.submit "Save" %>
   </div>
 <% end %>
