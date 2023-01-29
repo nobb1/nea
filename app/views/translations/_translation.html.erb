@@ -1,37 +1,52 @@
-<div id="<%= dom_id translation %>">
-  <p>
-    <strong>Word:</strong>
-    <%= translation.word %>
-  </p>
-
-  <p>
-    <strong>Language:</strong>
-    <%= translation.language %>
-  </p>
-
-  <p>
-    <strong>Type:</strong>
-    <%= translation.word_type %>
-  </p>
-
-  <p>
-    <strong>Conjugation:</strong>
-    <%= translation.conjugation %>
+<div class="border border-secondary p-3" id="<%= dom_id translation %>">
+  <h3 class="font-weight-bold"><%= translation.word %></h3>
+  <h6 class="text-muted"><%= "#{translation.word_type.capitalize} - #{translation.votes} Votes"%></h6>
+  <h3 class="font-weight-bold"><%= translation.word_translation %></h3>
+  <hr/>
+  <p style="<%= translation.word_type != "verb" ? "display: none" : "" %>">
+    <a class="font-weight-bold" data-toggle="collapse" href="#conjugation-<%= translation.word.delete(' ').downcase! %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Conjugations
+    </a>
+    <div class="collapse" id="conjugation-<%= translation.word.delete(' ').downcase! %>"%>
+      <table>
+        <tr>
+          <td></td>
+          <th>Present</th>
+          <th>Preterite</th>
+          <th>Imperfect</th>
+          <th>Conditional</th>
+          <th>Future</th>
+        </tr>
+        <tr>
+          <td>I</td>
+          <td><%= translation.conjugation.present_i %></td>
+        </tr>
+          <td>You</td>
+          <td><%= translation.conjugation.present_you %></td>
+        <tr>
+          <td>He/she/it</td>
+          <td><%= translation.conjugation.present_hesheit %></td>
+        </tr>
+        <tr>
+          <td>We</td>
+          <td><%= translation.conjugation.present_we %></td>
+        </tr>
+        <tr>
+          <td>You all</td>
+          <td><%= translation.conjugation.present_youall %></td>
+        </tr>
+        <tr>
+          <td>They</td>
+          <td><%= translation.conjugation.present_they %></td>
+        </tr>
+      </table>
+    </div>
   </p>
 
   <p>
     <strong>Example:</strong>
+    <br>
     <%= translation.example %>
-  </p>
-
-  <p>
-    <strong>Translation:</strong>
-    <%= translation.word_translation %>
-  </p>
-
-  <p>
-    <strong>Votes:</strong>
-    <%= translation.votes %>
   </p>
 
 </div>

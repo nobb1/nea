@@ -1,28 +1,22 @@
 class TranslationsController < ApplicationController
   before_action :set_translation, only: %i[show edit update destroy]
 
-  # GET /translations or /translations.json
   def index
     @translations = Translation.all
   end
 
-  # GET /translations/1 or /translations/1.json
   def show
   end
 
-  # GET /translations/new
   def new
     @translation = Translation.new
     @translation.build_conjugation
     @translation.build_language
-    @translation.votes = 0
   end
 
-  # GET /translations/1/edit
   def edit
   end
 
-  # POST /translations or /translations.json
   def create
     @translation = Translation.new(translation_params)
 
@@ -37,7 +31,6 @@ class TranslationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /translations/1 or /translations/1.json
   def update
     respond_to do |format|
       if @translation.update(translation_params)
@@ -50,7 +43,6 @@ class TranslationsController < ApplicationController
     end
   end
 
-  # DELETE /translations/1 or /translations/1.json
   def destroy
     @translation.destroy
 
@@ -62,7 +54,6 @@ class TranslationsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_translation
     @translation = Translation.find(params[:id])
   end

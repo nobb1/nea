@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_26_220327) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_27_113949) do
   create_table "conjugations", force: :cascade do |t|
     t.string "present_i"
     t.string "present_you"
@@ -32,7 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_220327) do
     t.string "word_type"
     t.text "example"
     t.string "word_translation"
-    t.integer "votes"
+    t.integer "votes", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "language_id"

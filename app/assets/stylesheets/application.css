@@ -14,13 +14,33 @@
  *= require_self
  */
 
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200,200,200);
+  letter-spacing: 1px;
+}
+
+td, th {
+  border: 1px solid rgb(190,190,190);
+  padding: 10px 20px;
+}
+
+th {
+  background-color: rgb(235,235,235);
+}
+
 .field {
   display: flex;
   margin: 8px;
 }
 
 label {
-  width: 100px;
+  width: 150px;
+  margin-right: 1em;
   display: inline-block;
   align-self: flex-start;
+ }
+
+ #hide {
+  display: none;
  }
