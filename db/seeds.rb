@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+
+Translation.create(word: "hello", word_type: "adjective", example: "asd", word_translation: "asda", language: "spanish", user_id: User.first.id)

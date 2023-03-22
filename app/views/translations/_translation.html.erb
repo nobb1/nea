@@ -1,6 +1,11 @@
-<div class="border border-secondary p-3" id="<%= dom_id translation %>">
-  <h3 class="font-weight-bold"><%= translation.word %></h3>
-  <h6 class="text-muted"><%= "#{translation.word_type.capitalize} - #{translation.votes} Votes"%></h6>
+<div id="<%= dom_id translation %>">
+  <!--<h3 class="font-weight-bold"><%= translation.word %></h3>-->
+  <%# Add classes here !!! %>
+  <%= link_to translation.word, "/translations/#{translation.id}", class: "h5" %>
+  <div class="d-flex align-items-center">
+    <h6 class="text-muted d-flex align-items-center"><%= "#{translation.word_type.capitalize} - #{pluralize(translation.votes, "vote")} -"%><%= button_to "Vote", vote_path(:id => translation.id), method: :post, class: "btn btn-success h-50 ml-1" %></h6>
+  </div>
+  <h6 class="text-muted">By <%= translation.user.username %></h6>
   <h3 class="font-weight-bold"><%= translation.word_translation %></h3>
   <hr/>
   <p style="<%= translation.word_type != "verb" ? "display: none" : "" %>">

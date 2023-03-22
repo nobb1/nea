@@ -1,8 +1,6 @@
 <%= form_with(model: translation) do |form| %>
   <% if translation.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(translation.errors.count, "error") %> prohibited this translation from being saved:</h2>
-
       <ul>
         <% translation.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -15,60 +13,56 @@
     <%= form.label :word, class: "word" %>
     <%= form.text_field :word %>
   </div>
-  <hr>
-  <%= form.fields_for :language do |language_form| %>
-    <div class="field">
-      <%= language_form.label :language_name, "Translation language", class: "text-truncate" %>
-      <%= language_form.select :language_name, %w[spanish french] %>
-    </div>
-  <% end %>
-  <hr>
+  <div class="field">
+    <%= form.label :language, "Language", class: "text-truncate" %>
+    <%= form.select :language, %w[spanish french] %>
+  </div>
   <div class="field">
     <%= form.label :word_translation, "Translation" %>
     <%= form.text_field :word_translation %>
   </div>
-  <hr>
-  <div class="field" data-contoller="toggle">
-    <%= form.label :word_type %>
-    <%= form.select :word_type, %w[adjective adverb article conjunction noun preposition pronoun verb], "data-action" => "change->toggle#changed" %>
+  <div data-controller="toggle" data-toggle-input-value="translation_word_type" data-toggle-show-value="verb">
+    <div class="field">
+      <%= form.label :word_type %>
+      <%= form.select :word_type, %w[adjective adverb article conjunction noun preposition pronoun verb] %>
+    </div>
+    <div class="change" data-toggle-target="field">
+      <%= form.fields_for :conjugation do |conjugation_form| %>
+        <h6><b>Present Tense</b></h6>
+        <div class="field"> 
+          <%= conjugation_form.label :present_i, "I:" %>
+          <%= conjugation_form.text_field :present_i %>
+        </div>
+        <div class="field">
+          <%= conjugation_form.label :present_you, "You:" %>
+          <%= conjugation_form.text_field :present_you %>
+        </div>
+        <div class="field">
+          <%= conjugation_form.label :present_hesheit, "He/she/it:" %>
+          <%= conjugation_form.text_field :present_hesheit %>
+        </div>
+        <div class="field">
+          <%= conjugation_form.label :present_we, "We:" %>
+          <%= conjugation_form.text_field :present_we %>
+        </div>
+        <div class="field">
+          <%= conjugation_form.label :present_youall, "You all:" %>
+          <%= conjugation_form.text_field :present_youall %>
+        </div>
+        <div class="field">
+          <%= conjugation_form.label :present_they, "They:" %>
+          <%= conjugation_form.text_field :present_they %>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div class="change" data-toggle-target="conjugation" id="hide" style="display: none">
-    <%= form.fields_for :conjugation do |conjugation_form|%>
-      <h6><b>Present Tense</b></h6>
-      <div class="field">
-        <%= conjugation_form.label :present_i, "I:" %>
-        <%= conjugation_form.text_field :present_i %>
-      </div>
-      <div class="field">
-        <%= conjugation_form.label :present_you, "You:" %>
-        <%= conjugation_form.text_field :present_you %>
-      </div>
-      <div class="field">
-        <%= conjugation_form.label :present_hesheit, "He/she/it:" %>
-        <%= conjugation_form.text_field :present_hesheit %>
-      </div>
-      <div class="field">
-        <%= conjugation_form.label :present_we, "We:" %>
-        <%= conjugation_form.text_field :present_we %>
-      </div>
-      <div class="field">
-        <%= conjugation_form.label :present_youall, "You all:" %>
-        <%= conjugation_form.text_field :present_youall %>
-      </div>
-      <div class="field">
-        <%= conjugation_form.label :present_they, "They:" %>
-        <%= conjugation_form.text_field :present_they %>
-      </div>
-    <% end %>
-  </div>
-  <hr>
   <div class="field">
     <%= form.label :example%>
     <%= form.text_area :example %>
   </div>
   <hr>
   <div class="field">
-    <%= form.submit "Save" %>
+    <%= form.submit "Save", class:"btn btn-success mr-2" %>
+    <%= link_to "Back to translations", translations_path, class:"btn btn-primary" %>
   </div>
 <% end %>

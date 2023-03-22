@@ -1,0 +1,14 @@
+<div id="<%= dom_id comment %>">
+  <hr/>
+  <div class="d-flex">
+    <strong class="mr-1"><%= User.find(comment.user_id).username %><%= button_to "Vote", "comments/#{comment.id}/vote", method: :post, class: "btn btn-success h-50 ml-1" %></strong>
+    <p>
+      <%= " - #{pluralize(comment.votes, "vote")}" %>
+      <% if current_user && comment.user_id == current_user.id %>
+        <%= button_to "Delete", comment, method: :delete, class:"btn btn-danger ml-1"%>
+      <% end %>
+    </p>
+  </div>
+  <p><%= comment.text_content %></p>
+
+</div>

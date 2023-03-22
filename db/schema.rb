@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_27_113949) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_20_230642) do
+  create_table "comments", force: :cascade do |t|
+    t.text "text_content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "translation_id", null: false
+    t.integer "user_id", null: false
+    t.integer "votes"
+    t.index ["translation_id"], name: "index_comments_on_translation_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "comments_users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "comment_id", null: false
+    t.integer "user_id", null: false
+    t.index ["comment_id"], name: "index_comments_users_on_comment_id"
+    t.index ["user_id"], name: "index_comments_users_on_user_id"
+  end
+
   create_table "conjugations", force: :cascade do |t|
     t.string "present_i"
     t.string "present_you"
@@ -23,10 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_113949) do
     t.integer "translation_id"
   end
 
-  create_table "languages", force: :cascade do |t|
-    t.string "language_name"
-  end
-
   create_table "translations", force: :cascade do |t|
     t.string "word"
     t.string "word_type"
@@ -35,9 +51,38 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_27_113949) do
     t.integer "votes", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "language_id"
+    t.string "language"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_translations_on_user_id"
   end
 
+  create_table "translations_users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "translation_id", null: false
+    t.integer "user_id", null: false
+    t.index ["translation_id"], name: "index_translations_users_on_translation_id"
+    t.index ["user_id"], name: "index_translations_users_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "username"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "comments", "translations"
+  add_foreign_key "comments_users", "comments"
+  add_foreign_key "comments_users", "users"
   add_foreign_key "conjugations", "translations"
-  add_foreign_key "translations", "languages"
+  add_foreign_key "translations", "users"
+  add_foreign_key "translations_users", "translations"
+  add_foreign_key "translations_users", "users"
 end

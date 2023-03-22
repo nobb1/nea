@@ -1,12 +1,24 @@
 <div class="container">
-  <p style="color: green"><%= notice %></p>
   
   <%= render @translation %>
+
+  <hr/>
   
-  <div>
-    <%= link_to "Edit this translation", edit_translation_path(@translation) %> |
-    <%= link_to "Back to translations", translations_path %>
-  
-    <%= button_to "Destroy this translation", @translation, method: :delete %>
+  <%= render "comments/form", :comment => @comment, :translation_id => @translation.id %>
+
+  <% comments = Comment.where(translation_id: @translation.id) %>
+  <% if comments.any? %>
+    <% comments.each do |comment| %>
+      <%= render comment%>
+    <% end %>
+  <% end %>
+
+  <div class="d-flex">
+    <%= link_to "Back", translations_path, class:"btn btn-secondary mr-1" %>
+    <% if current_user && @translation.user_id == current_user.id %>
+      <%= link_to "Edit", edit_translation_path(@translation), class:"btn btn-primary mr-1" %> 
+      <%= button_to "Delete", @translation, method: :delete, class:"btn btn-danger" %>
+    <% end %>
   </div>
+  
 </div>

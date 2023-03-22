@@ -14,7 +14,15 @@
   </head>
 
   <body>
-    <%= render "navbar" %>
-    <%= yield %>
+    <header>
+      <%= render "shared/navbar" %>
+    </header>
+    <main>
+      <div class="container">
+        <p class="notice text-success"><%= notice %></p>
+        <p class="alert text-danger"><%= alert %></p>
+      </div>
+      <%= yield %>
+    </main>
   </body>
 </html>
