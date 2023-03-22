@@ -3,12 +3,12 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, except: %i[show index]
   before_action :author?, only: %i[edit update destroy]
 
-  # GET /comments or /comments.json
+  # GET /comments
   def index
     @comments = Comment.all
   end
 
-  # GET /comments/1 or /comments/1.json
+  # GET /comments/1
   def show
   end
 
@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
   def edit
   end
 
-  # POST /comments or /comments.json
+  # POST /comments
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
@@ -54,7 +54,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /comments/1 or /comments/1.json
+  # PATCH/PUT /comments/1
   def update
     respond_to do |format|
       if @comment.update(comment_params)
@@ -67,7 +67,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /comments/1 or /comments/1.json
+  # DELETE /comments/1
   def destroy
     sql_delete = "DELETE FROM comments_users
     WHERE comment_id=#{@comment.id} AND user_id=#{current_user.id};"

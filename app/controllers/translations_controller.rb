@@ -36,12 +36,13 @@ class TranslationsController < ApplicationController
       ActiveRecord::Base.connection.execute(sql_insert)
       @translation.votes += 1
     end
-    redirect_to translation_url(@translation)
+    redirect_back(fallback_location: root_path)
     @translation.save
   end
 
   def search
     @translations = Translation.where("word LIKE ? and language == '#{cookies[:language]}'", "%#{params[:q]}%")
+    @translations = merge_sort(@translations, :votes).reverse
   end
 
   def new
@@ -97,18 +98,18 @@ class TranslationsController < ApplicationController
     @translation.destroy
 
     respond_to do |format|
-      format.html { redirect_to translations_url, notice: "Translation was successfully destroyed." }
+      format.html { redirect_to translations_url, notice: "Translation was successfully deleted." }
       format.json { head :no_content }
     end
   end
 
   private
 
-  def merge(arr1, arr2)
+  def merge(arr1, arr2, sort_by)
     merged_arr = []
-    while not arr1.empty?
+    until arr1.empty?
       unless arr2.empty?
-        if arr1.first < arr2.first
+        if arr1.first[sort_by] < arr2.first[sort_by]
           merged_arr.append(arr1.first)
           arr1.shift
         else
@@ -121,14 +122,15 @@ class TranslationsController < ApplicationController
     end
     merged_arr + arr2
   end
-  
-  def merge_sort(arr)
+
+  def merge_sort(arr, sort_by)
     return arr if arr.length < 2
-    arr = arr.each_slice((arr.length/2.0).round).to_a
-    left = merge_sort(arr[0])
-    right = merge_sort(arr[1])
-    merge(left, right)
-  end  
+
+    arr = arr.each_slice((arr.length / 2.0).round).to_a
+    left = merge_sort(arr[0], sort_by)
+    right = merge_sort(arr[1], sort_by)
+    merge(left, right, sort_by)
+  end
 
   def author?
     redirect_to root_path unless @translation.user_id == current_user.id
